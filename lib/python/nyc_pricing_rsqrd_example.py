@@ -2,7 +2,8 @@ import csv
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
-from cost_functions import *
+from statistics.cost_functions import *
+
 
 class Import:
     def __init__(self, path, file):
