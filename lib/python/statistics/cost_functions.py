@@ -29,7 +29,7 @@ class CostFunction:
 
         df = self.df
 
-        y_mean = self.df[self.y].describe()['mean']
+        y_mean = self.df[self.y].mean()
         n = len(df)
         df['ss_tot'] = (df[self.y] - y_mean) ** 2
         ss_tot = df['ss_tot'].sum()
@@ -37,7 +37,10 @@ class CostFunction:
         df['ss_err'] = (df[self.y] - df[self.yhat]) ** 2
         ss_err = df['ss_err'].sum()
 
-        rsq = 1 - (ss_err / ss_tot)
+        ss_reg = ((df[self.yhat] - y_mean)**2).sum()
+
+        #rsq = 1 - (ss_err / ss_tot)
+        rsq = ss_reg / ss_tot
 
         return rsq
 
@@ -92,7 +95,6 @@ class CostFunction:
             error_std = df['abs_residual'].describe()['std']
             df = df[df['abs_residual'] < error_mean + error_std * self.std_oh]
         mape = df['abs_residual'].mean()
-
         return mape
 
     def cf_vw_mape(self):
