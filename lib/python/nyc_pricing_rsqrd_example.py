@@ -3,7 +3,10 @@ import pandas as pd
 import numpy as np
 import statsmodels.api as sm
 from statistics.cost_functions import *
-
+import MySQLdb
+import pandas.io.sql as psql
+import matplotlib
+pd.plot_params
 
 class Import:
     def __init__(self, path, file):
@@ -15,7 +18,7 @@ class Import:
         full_path = self.path + '/' + self.file
         print "importing " + full_path
 
-        data = pd.read_csv(full_path)
+        data = pd.read_csv(full_path, index_col='property_id')
 
         return data
 
@@ -78,8 +81,8 @@ class Regression:
 
         df_predicted = pd.DataFrame(r2.predict(), columns=['predicted'])
         df_final = df.combine_first(df_predicted)
+ 
 
         print r2.summary()
 
         return df_final
- 
